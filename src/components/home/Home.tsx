@@ -38,7 +38,7 @@ const Home = () => {
   return (
     <div className="text-center flex flex-col gap-10 justify-center m-auto">
       <div className="m-auto">
-        <img src="public/brand/logo.svg" className="" />
+        <img src="Brand/logo.svg" className="" />
       </div>
       <p className="text-white" >
       Connect a wallet to check your claim Eligibility 
