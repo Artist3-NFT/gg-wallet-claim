@@ -5,9 +5,10 @@ import { darkTheme } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import { AuthProvider, useAuth } from '../../utils/AuthProvider'; // Import the AuthProvider
 import { bsc } from "thirdweb/chains";
+import { useActiveWalletConnectionStatus } from "thirdweb/react";
 
 const client = createThirdwebClient({
-  clientId: " 95b8094a8af9a767c30afa72aeb6b6fc",
+  clientId: "...",
 });
 
 const wallets = [
@@ -20,6 +21,9 @@ const wallets = [
 
 ];
 const Home = () => {
+  const isConnected = useActiveWalletConnectionStatus();
+  console.log(isConnected)
+
 
     const { doLogin, doLogout, getLoginPayload, isLoggedIn } = useAuth();
   return (
@@ -60,7 +64,9 @@ const Home = () => {
         await doLogout();
       }}
     />
-          {isLoggedIn && <p className="underline text-[#fb6421]">Check your Eligibility</p>}
+          {isConnected === "connected" ? (<p className="underline text-[#fb6421]">Check your Eligibility</p> ) : (
+                    ""
+                  )}
 
     </div>
   );
