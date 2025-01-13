@@ -60,7 +60,7 @@ const Home = () => {
         await doLogout();
       }}
     />
-          {isLoggedIn && <p className="underline text-[#fb6421]">Check Eligibility</p>}
+          {isLoggedIn && <p className="underline text-[#fb6421]">Check your Eligibility</p>}
 
     </div>
   );
