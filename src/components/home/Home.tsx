@@ -77,7 +77,7 @@ const Home = () => {
       }}
     />
           {isConnected === "connected" ? (
-            <button className="underline text-[#fb6421]">Check your Eligibility 
+            <button className="underline text-[#fb6421]" onClick={handleCheckEligibility}>Check your Eligibility 
             <Flex align="center" gap="middle">
             {isLoading ? (
               <Spin indicator={<LoadingOutlined spin />} />
