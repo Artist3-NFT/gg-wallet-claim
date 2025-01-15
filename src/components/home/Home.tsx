@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { createThirdwebClient } from "thirdweb";
-import { ConnectButton } from "thirdweb/react";
+import { ConnectButton, useActiveAccount } from "thirdweb/react";
 import { darkTheme } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import {generatePayload, isLoggedIn, login, logout} from '../../utils/AuthProvider';
@@ -10,9 +10,18 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Flex, Spin } from 'antd';
 import { VerifyLoginPayloadParams, createAuth } from "thirdweb/auth";
 
+require('dotenv').config();
+console.log('API URL:', process.env.REACT_APP_API_URL);
+
+const client_Id = process.env.NEXT_APP_CLIENT_ID;
+const privateKey = process.env.NEXT_APP_PRIVATE_KEY;
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+
 const client = createThirdwebClient({
-  clientId: "95b8094a8af9a767c30afa72aeb6b6fc",
+  clientId: `${client_Id}`,
 });
+
 
 const wallets = [
   createWallet("io.metamask"),
@@ -23,9 +32,17 @@ const wallets = [
   createWallet("com.trustwallet.app"),
 
 ];
-const Home = () => {
-  const isConnected = useActiveWalletConnectionStatus();
 
+type HomeComponentProps = {
+  user_id?: string;
+  airdrop_id?: string;
+};  
+export default function Home({ user_id, airdrop_id }: HomeComponentProps){
+  const isConnected = useActiveWalletConnectionStatus();
+  const [eligibilityMessage, setEligibilityMessage] = useState<string | null>(null);
+
+  const activeAccount = useActiveAccount();
+  const address = activeAccount?.address; // Get the connected wallet address
   const [isLoading, setIsLoading] = useState(false)
 
   const auth = createAuth({
@@ -35,24 +52,56 @@ const Home = () => {
 
   
   const handleCheckEligibility = async () => {
+    if (!address) {
+      setEligibilityMessage("Please connect your wallet first.");
+      return;
+    }
+    console.log("Environment Variables: ", process.env);
+
     setIsLoading(true);
-   
-    // setIsLoading(false);
+    setEligibilityMessage(null);
+
+    try {
+      console.log(apiUrl)
+      if (!apiUrl) throw new Error("API URL is not defined in environment variables");
+
+      const response = await fetch(
+        `${apiUrl}/${airdrop_id}/${user_id}/${address}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch eligibility status");
+      }
+
+      const data = await response.json();
+
+      if (data?.eligible) {
+        setEligibilityMessage("Congratulations! You are eligible to claim the reward.");
+      } else {
+        setEligibilityMessage("Sorry, you are not eligible for this reward.");
+      }
+    } catch (error) {
+      setEligibilityMessage("An error occurred while checking eligibility.");
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
     // const { doLogin, doLogout, getLoginPayload, isLoggedIn,  generatePayload , login, logout } = useAuth();
-console.log(login)
-   
+  
     
 
   return (
-    <div className="text-center flex flex-col gap-10 justify-center m-auto">
+    <div className="text-center flex flex-col gap-6 justify-center m-auto">
       <div className="m-auto">
         <img src="Brand/logo.svg" className="" />
       </div>
-      <p className="text-white" >
-      Connect a wallet to check your claim Eligibility 
+      <p className="text-white font-extrabold text-2xl px-10" >
+      Connect a wallet to check your Ecosystem Claim Eligibility 
       </p>
+      <p>Gamic ID: {user_id}</p>
+      
 
       <ConnectButton
       client={client}
@@ -75,28 +124,7 @@ console.log(login)
         showThirdwebBranding: false,
 
       }}
-      // auth={{
-      //   // The following methods run on the server (not client)!
-      //   isLoggedIn: async () => {
-      //     const authResult = await isLoggedIn();
-      //     if (!authResult) return false;
-      //     return true;
-      //   },
-      //   doLogin: async (params) => await login(params),
-      //   getLoginPayload: async ({ address }) =>
-      //     generatePayload({ address }),
-      //   doLogout: async () => await logout(),
-      // }}
-      // onConnect={async () => {
-      //   // Perform any additional actions after successful connection
-      //   // For example, you can call a function to update the user's login status
-      //   await doLogin();
-      // }}
-      // onDisconnect={async () => {
-      //   // Perform any additional actions after successful disconnection
-      //   // For example, you can call a function to update the user's logout status
-      //   await doLogout();
-      // }}
+     
       auth={{
         isLoggedIn: async (address) => {
           console.log("checking if logged in!", { address });
@@ -114,16 +142,20 @@ console.log(login)
       }}
     />
           {isConnected === "connected" ? (
-            <div className="m-auto"><button className="underline text-[#fb6421] flex gap-3" onClick={handleCheckEligibility}>Check your Eligibility
+            <div className="m-auto flex flex-col justify-center items-center">
+              <button className="underline text-[#fb6421] flex gap-3" onClick={handleCheckEligibility}>Check your Eligibility
 {isLoading ? (
               <Spin indicator={<LoadingOutlined spin />} />
             ) : (
               ""
             )}
         </button>
-            
-          {/* <Spin indicator={<LoadingOutlined spin />} /> */}
-          </div>
+           <div>
+        {eligibilityMessage && (
+        <p className="text-white text-center font-medium mt-5">{eligibilityMessage}</p>
+      )}</div> 
+               
+                </div>
 
           ) : (
                     ""
@@ -134,4 +166,3 @@ console.log(login)
   );
 };
 
-export default Home;
