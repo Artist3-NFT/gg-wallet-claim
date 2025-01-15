@@ -9,9 +9,9 @@ import { useActiveWalletConnectionStatus } from "thirdweb/react";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Flex, Spin } from 'antd';
 import { VerifyLoginPayloadParams, createAuth } from "thirdweb/auth";
+import { use } from "react";
 
 require('dotenv').config();
-console.log('API URL:', process.env.REACT_APP_API_URL);
 
 const client_Id = process.env.NEXT_APP_CLIENT_ID;
 const privateKey = process.env.NEXT_APP_PRIVATE_KEY;
@@ -34,10 +34,11 @@ const wallets = [
 ];
 
 type HomeComponentProps = {
-  user_id?: string;
-  airdrop_id?: string;
-};  
-export default function Home({ user_id, airdrop_id }: HomeComponentProps){
+    user_id?: string;
+    airdrop_id?: string;
+};
+
+export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
   const isConnected = useActiveWalletConnectionStatus();
   const [eligibilityMessage, setEligibilityMessage] = useState<string | null>(null);
 

@@ -5,13 +5,14 @@ import HomeComponent from "@/components/home/Home"; // Correct import name
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThirdwebProvider } from "thirdweb/react";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { use } from "react";
 
-export default function Home({ params }: { params: { user_id?: string; airdrop_id?: string } }) {
+export default function Home({ params }: { params: Promise<{ user_id: string; airdrop_id: string }> }) {
     const queryClient = new QueryClient();
   const desiredChainId = 56;
 
 //   const { user_id, airdrop_id } = params;
-const { user_id, airdrop_id } = params;
+const { user_id, airdrop_id } = use(params);
 console.log(user_id, airdrop_id); 
  
   return (

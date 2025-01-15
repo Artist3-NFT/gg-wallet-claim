@@ -6,13 +6,13 @@ import { privateKeyToAccount } from "thirdweb/wallets";
 import { cookies } from "next/headers";
 import { createThirdwebClient } from "thirdweb";
 
-const client_Id = process.env.REACT_APP_CLIENT_ID;
+const client_Id = process.env.NEXT_APP_CLIENT_ID;
 
 // const AuthContext = createContext();
 const client = createThirdwebClient({
   clientId: `${client_Id}`,
 });
-const privateKey = process.env.REACT_APP_PRIVATE_KEY;
+const privateKey = process.env.NEXT_APP_PRIVATE_KEY;
 
 if (!privateKey) {
   throw new Error("Missing REACT_APP_PRIVATE_KEY in .env file.");
