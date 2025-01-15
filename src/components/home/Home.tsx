@@ -77,13 +77,13 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
 
       const data = await response.json();
 
-      if (data?.eligible) {
-        setEligibilityMessage("Congratulations! You are eligible to claim the reward.");
+      if (data?.can_claim) {
+        setEligibilityMessage("🎉Congratulations🎉  ! You are eligible to claim the reward.😃 ");
       } else {
-        setEligibilityMessage("Sorry, you are not eligible for this reward.");
+        setEligibilityMessage("Sorry😔 , you are not eligible for this reward.");
       }
     } catch (error) {
-      setEligibilityMessage("An error occurred while checking eligibility.");
+      setEligibilityMessage("❌An error occurred while checking eligibility.");
       console.error(error);
     } finally {
       setIsLoading(false);
