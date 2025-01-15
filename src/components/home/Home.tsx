@@ -13,14 +13,15 @@ import { use } from "react";
 
 require('dotenv').config();
 
-const client_Id = process.env.NEXT_APP_CLIENT_ID;
-const privateKey = process.env.NEXT_APP_PRIVATE_KEY;
+const client_Id = process.env.NEXT_PUBLIC_CLIENT_ID;
+const privateKey = process.env.NEXT_PRIVATE_KEY;
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 
 const client = createThirdwebClient({
   clientId: `${client_Id}`,
 });
+console.log( privateKey)
 
 
 const wallets = [
@@ -96,12 +97,12 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
   return (
     <div className="text-center flex flex-col gap-6 justify-center m-auto">
       <div className="m-auto">
-        <img src="Brand/logo.svg" className="" />
+        <img src="/Brand/logo.svg" className="" />
       </div>
-      <p className="text-white font-extrabold text-2xl px-10" >
+      <p className="text-white font-extrabold text-xl px-10" >
       Connect a wallet to check your Ecosystem Claim Eligibility 
       </p>
-      <p>Gamic ID: {user_id}</p>
+      <p className="text-white ">Gamic ID: {user_id}</p>
       
 
       <ConnectButton
