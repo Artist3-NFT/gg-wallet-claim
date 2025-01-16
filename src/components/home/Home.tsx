@@ -68,7 +68,11 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
       if (!apiUrl) throw new Error("API URL is not defined in environment variables");
 
       const response = await fetch(
-        `${apiUrl}/${airdrop_id}/${user_id}/${address}`
+        `${apiUrl}/${airdrop_id}/${user_id}/${address}`,
+        {
+          method: "GET",
+          mode: "no-cors",
+        }
       );
 
       if (!response.ok) {
