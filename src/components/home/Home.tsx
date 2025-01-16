@@ -21,7 +21,6 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 const client = createThirdwebClient({
   clientId: `${client_Id}`,
 });
-console.log( privateKey)
 
 
 const wallets = [
@@ -58,27 +57,28 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
       setEligibilityMessage("Please connect your wallet first.");
       return;
     }
-    console.log("Environment Variables: ", process.env);
 
     setIsLoading(true);
     setEligibilityMessage(null);
 
     try {
-      console.log(apiUrl)
       if (!apiUrl) throw new Error("API URL is not defined in environment variables");
+      const requestUrl = `${apiUrl}/${airdrop_id}/${user_id}/${address}`;
 
-      const response = await fetch(
-        `${apiUrl}/${airdrop_id}/${user_id}/${address}`,
-        {
-          method: "GET",
-          mode: "no-cors",
-        }
-      );
+      const response = await fetch(requestUrl, {
+        method: "GET", // HTTP GET request
+        // mode:'no-cors',
+        // cache: "no-cache", // Browser cache disabled
+        // credentials: "same-origin", // Include cookies in the request
+        headers: {
+          "Accept": "application/json", // Let the server know we expect JSON
+        },
+      });
+      console.log(response)
 
       if (!response.ok) {
-        throw new Error("Failed to fetch eligibility status");
+        throw new Error(`Failed to fetch eligibility status. Status: ${response.status}`);
       }
-
       const data = await response.json();
 
       if (data?.can_claim) {
