@@ -94,8 +94,8 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
             </div>
         );
         setEligibilityMessage(successMessage);
-        localStorage.setItem("eligibilityMessage", JSON.stringify(successMessage));
-        localStorage.setItem("connectedAddress", address);
+        // localStorage.setItem("eligibilityMessage", JSON.stringify(successMessage));
+        // localStorage.setItem("connectedAddress", address);
         
       } else {
         const failMessage =(
@@ -105,8 +105,8 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
         </div>
         )
         setEligibilityMessage(failMessage);
-        localStorage.setItem("eligibilityMessage", JSON.stringify(failMessage));
-      localStorage.setItem("connectedAddress", address);
+      //   localStorage.setItem("eligibilityMessage", JSON.stringify(failMessage));
+      // localStorage.setItem("connectedAddress", address);
         
       }
       setIsEligibilityChecked(true);
