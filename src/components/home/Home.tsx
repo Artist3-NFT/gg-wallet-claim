@@ -94,8 +94,8 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
             </div>
         );
         setEligibilityMessage(successMessage);
-        localStorage.setItem("eligibilityMessage", JSON.stringify(successMessage));
-        localStorage.setItem("connectedAddress", address);
+        // localStorage.setItem("eligibilityMessage", JSON.stringify(successMessage));
+        // localStorage.setItem("connectedAddress", address);
         
       } else {
         const failMessage =(
@@ -105,8 +105,8 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
         </div>
         )
         setEligibilityMessage(failMessage);
-        localStorage.setItem("eligibilityMessage", JSON.stringify(failMessage));
-      localStorage.setItem("connectedAddress", address);
+      //   localStorage.setItem("eligibilityMessage", JSON.stringify(failMessage));
+      // localStorage.setItem("connectedAddress", address);
         
       }
       setIsEligibilityChecked(true);
@@ -118,14 +118,14 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    const savedAddress = localStorage.getItem("connectedAddress");
-    const savedMessage = localStorage.getItem("eligibilityMessage");
+  // useEffect(() => {
+  //   const savedAddress = localStorage.getItem("connectedAddress");
+  //   const savedMessage = localStorage.getItem("eligibilityMessage");
   
-    if (savedAddress && savedMessage && savedAddress === address) {
-      setEligibilityMessage(JSON.parse(savedMessage));
-    }
-  }, [address]);
+  //   if (savedAddress && savedMessage && savedAddress === address) {
+  //     setEligibilityMessage(JSON.parse(savedMessage));
+  //   }
+  // }, [address]);
   
   const handleGoBackToApp = () => {
     // Replace 'myapp://home' with your app's deep link or universal link
