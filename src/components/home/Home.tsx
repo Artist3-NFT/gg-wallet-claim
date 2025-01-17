@@ -118,14 +118,14 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
       setIsLoading(false);
     }
   };
-  useEffect(() => {
-    const savedAddress = localStorage.getItem("connectedAddress");
-    const savedMessage = localStorage.getItem("eligibilityMessage");
+  // useEffect(() => {
+  //   const savedAddress = localStorage.getItem("connectedAddress");
+  //   const savedMessage = localStorage.getItem("eligibilityMessage");
   
-    if (savedAddress && savedMessage && savedAddress === address) {
-      setEligibilityMessage(JSON.parse(savedMessage));
-    }
-  }, [address]);
+  //   if (savedAddress && savedMessage && savedAddress === address) {
+  //     setEligibilityMessage(JSON.parse(savedMessage));
+  //   }
+  // }, [address]);
   
   const handleGoBackToApp = () => {
     // Replace 'myapp://home' with your app's deep link or universal link
