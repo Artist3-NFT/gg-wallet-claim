@@ -90,7 +90,7 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
         const successMessage = (
           <div className="text-white font-extrabold  px-10">
               <p className="text-2xl text-[#B0FC00] py-2 ">🎉Congratulations🎉!</p>
-              <p>You are eligible to claim the reward.😃 </p>
+              <p>You are eligible to claim ecosystem reward.😃 </p>
             </div>
         );
         setEligibilityMessage(successMessage);
@@ -101,7 +101,7 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
         const failMessage =(
           <div className="text-white font-extrabold  px-10">
           <p className="text-2xl py-2 text-red-500">Sorry😔!</p>
-          <p>You are eligible to claim the reward.😃 </p>
+          <p>You are not eligible to claim ecosystem reward </p>
         </div>
         )
         setEligibilityMessage(failMessage);
