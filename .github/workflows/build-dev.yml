@@ -1,0 +1,42 @@
+name: Docker Build and Push
+
+on:
+  push:
+    branches: [ "development" ]
+  pull_request:
+    branches: [ "development" ]
+
+env:
+  DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+  DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_HUB_TOKEN }}
+  IMAGE_NAME: artist3/wallet-claim-dapp-dev:latest
+  NEXT_PUBLIC_API_URL: https://dev.gamic.pro/api/v2/reward/vault/airdrop/ecosystem/web/can-claim
+  NEXT_PUBLIC_CLIENT_ID: 95b8094a8af9a767c30afa72aeb6b6fc
+  NEXT_PRIVATE_KEY: 4be390d74336aab758655bae4fabec79e76bde5d2898df9131e71f6e5d12e877
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: |
+          artist3/wallet-claim-dapp-dev:latest
+          artist3/wallet-claim-dapp-dev:${{ github.sha }}

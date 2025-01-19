@@ -17,8 +17,9 @@ export default function Home() {
       <QueryClientProvider client={queryClient}>
 <ThirdwebProvider >
       <main className="flex items-center sm:items-start  m-auto h-full ">
-       {/* <HomeComponent/> */}
-       <p className="text-3xl text-white text-center m-auto"> Your'e not allowed to see this page</p>
+        <div>
+                <p className="text-3xl text-white text-center m-auto"> Your'e not allowed to see this page</p>
+        </div>
       </main>
       </ThirdwebProvider>
       </QueryClientProvider>

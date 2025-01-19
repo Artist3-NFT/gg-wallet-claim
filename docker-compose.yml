@@ -1,0 +1,28 @@
+services:
+  gg-wallet-claim-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NODE_ENV=development
+    command: npm run dev
+
+  gg-wallet-claim-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3049:3000"
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  node_modules:
+  next:
