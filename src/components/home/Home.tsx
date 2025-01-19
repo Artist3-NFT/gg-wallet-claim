@@ -90,23 +90,23 @@ export default function Home({ user_id, airdrop_id }: HomeComponentProps) {
         const successMessage = (
           <div className="text-white font-extrabold  px-10">
               <p className="text-2xl text-[#B0FC00] py-2 ">🎉Congratulations🎉!</p>
-              <p>You are eligible to claim the reward.😃 </p>
+              <p>You are eligible to claim ecosystem reward.😃 </p>
             </div>
         );
         setEligibilityMessage(successMessage);
-        localStorage.setItem("eligibilityMessage", JSON.stringify(successMessage));
-        localStorage.setItem("connectedAddress", address);
+        // localStorage.setItem("eligibilityMessage", JSON.stringify(successMessage));
+        // localStorage.setItem("connectedAddress", address);
         
       } else {
         const failMessage =(
           <div className="text-white font-extrabold  px-10">
           <p className="text-2xl py-2 text-red-500">Sorry😔!</p>
-          <p>You are eligible to claim the reward.😃 </p>
+          <p>You are not eligible to claim ecosystem reward </p>
         </div>
         )
         setEligibilityMessage(failMessage);
-        localStorage.setItem("eligibilityMessage", JSON.stringify(failMessage));
-      localStorage.setItem("connectedAddress", address);
+      //   localStorage.setItem("eligibilityMessage", JSON.stringify(failMessage));
+      // localStorage.setItem("connectedAddress", address);
         
       }
       setIsEligibilityChecked(true);
