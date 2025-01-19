@@ -1,10 +1,10 @@
-name: Docker Build and Push Production
+name:
+  deploy-production
 
 on:
-#  push:
-#    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
+  push:
+    branches: [main]
 
 env:
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
